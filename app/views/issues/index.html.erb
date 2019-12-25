@@ -1,0 +1,136 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to raw("<button class='btn btn-default'>Logout</button>"), 
+    destroy_user_session_path, 
+    method: :delete %>
+
+<div class="title-container">
+  <h1 >Issues</h1>
+  <%= link_to 'Create Issue', new_issue_path, class:"btn btn-default"%>
+</div>
+
+
+<div class="linia_completa">
+  <div class="filter_title">Filter by:</div>
+  <div class="meitat_filtres">
+       <div id="All">
+        <a href="/issues"   class="filter_derecha btn btn-default ">All</a>
+      </div>
+    
+      <div id="Open">
+        <a ><%= link_to "Open", issues_url(statusOptions: "New&open") ,class:"filter_derecha btn btn-default quitar_subrayado" %> </a>
+      </div>
+      
+      <div id="My issues">
+        <a><%= link_to "My issues", issues_url(idActualUser: current_user.id) ,class:"filter_derecha btn btn-default quitar_subrayado"%> </a>
+      </div>
+
+      <div id="Watching" >
+        <a><%= link_to "Watching", issues_url(watcher: current_user.id) ,class:"filter_derecha btn btn-default quitar_subrayado"%> </a>
+      </div>
+  </div>
+</div>
+
+<div class="linia_completa_issues"><h2 class="textSize">Issues (1-<%= @issues.size %> of <%= @issues.size %>)</h2> </div>
+
+<p id="issues-filter-criteria">
+  <% if request.query_parameters[:typeOptions] %>
+    <b>type:</b> "<%= request.query_parameters[:typeOptions] %>"
+  <% end %>
+  
+  <% if request.query_parameters[:priorityOptions] %>
+    <b>priority:</b> "<%= request.query_parameters[:priorityOptions] %>"
+  <% end %>
+  
+  <% if request.query_parameters[:statusOptions] %>
+    <b>status:</b> "<%= request.query_parameters[:statusOptions] %>"
+  <% end %>
+  
+  <% if request.query_parameters[:assignee] %>
+    <b>assignee:</b> "<%= request.query_parameters[:assignee] %>"
+  <% end %>
+  
+</p>
+
+<div class="issues">
+  <table>
+      <tbody>
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th class="tileVariables "><%= link_to "Title", issues_url(OrderBy: "title"),class:"quitar_subrayado" %></th>
+              <th class="tileVariables"><%= link_to "T", issues_url(OrderBy: "type") ,class:"quitar_subrayado"%></th>
+              <th class="tileVariables"><%= link_to "P", issues_url(OrderBy: "priority") ,class:"quitar_subrayado"%></th>
+              <th class="tileVariables"><%= link_to "Status", issues_url(OrderBy: "status") ,class:"quitar_subrayado"%></th>
+              <th class="tileVariables"><%= link_to "Votes", issues_url(OrderBy: "votes") ,class:"quitar_subrayado"%></th>
+              <th class="tileVariables"><%= link_to "Assignee", issues_url(OrderBy: "assignee"),class:"quitar_subrayado" %></th>
+              <th class="tileVariables"><%= link_to "Created", issues_url(OrderBy: "created") ,class:"quitar_subrayado"%></th>
+              <th class="tileVariables"><%= link_to "Updated", issues_url(OrderBy: "updated"),class:"quitar_subrayado" %></th>
+            </tr>
+          </thead>
+          <% @issues.each do |issue| %>
+              <div class="issue">
+                <tr>
+                  <td class="col"><%= link_to issue.title, issue,class:"quitar_subrayado" %></td>
+                  <td class="col"><%= link_to issue.issueType, issues_url(typeOptions: issue.issueType),class:"quitar_subrayado" %></td>
+                  <td class="col"><%= link_to issue.priority, issues_url(priorityOptions: issue.priority),class:"quitar_subrayado" %></td>
+                  <td class="col"><%= link_to issue.status, issues_url(statusOptions: issue.status) ,class:"quitar_subrayado"%></td>
+                  <td class="col"><%= issue.num_votes %></td>
+                  
+                  <% if !issue.assignee.nil? && !issue.assignee.empty? %>
+                    <td class="col">
+                      <%
+                      noRegistrado = false
+                      if User.exists?(issue.assignee)
+                        userName = User.find(issue.assignee).name
+                      else
+                        userName = issue.assignee
+                        noRegistrado = true
+                      end
+                      
+                      iniciales = userName.strip.split /\s+/
+                      avatarName = 'X'
+                      
+                      if iniciales.length == 1 && !noRegistrado
+                        ini1 = iniciales[0]
+                        avatarName = ini1[0,1].upcase
+                      end
+                      if iniciales.length > 1  && !noRegistrado
+                        ini1 = iniciales[0]
+                        ini2 = iniciales[1]
+                        avatarName = ini1[0,1].upcase + ini2[0,1].upcase
+                      end
+                      
+                      backColours = ['Gold', 'Limegreen', 'LightBlue', 'Bisque', 'Pink', 'Tomato', 'Orangered', 
+                      'Palegoldenrod', 'Palegreen', 'Mistyrose']
+                      numIdColor = issue.assignee.to_i % 10
+                      backColour = backColours[numIdColor]
+                      %>
+                      <div id='indexAssigne'>
+                        <div class="avatar" style="background:<%= backColour %>;"><%= avatarName %></div>
+                        <%= link_to userName, issues_url(assignee: issue.assignee), class: "assigneLink" %>
+                      </div>
+                    </td>
+
+                  <% else %>
+                  <td></td>
+                  <% end %>
+                  <td class="col"><%= issue.created_at %></td>
+                  <td class="col"><%= issue.updated_at %></td>
+                  <td>
+                  <% if  !Watcher.exists?(:issue_id => issue.id, :user_id => current_user.id) %>
+                  <%= link_to 'Watch', watch_url(id: issue.id, currentView: "ind"), method: :post,class:"quitar_subrayado" %>
+                  <% else %>
+                  <%= link_to 'UnWatch', watch_url(id: issue.id, currentView: "ind"), method: :post ,class:"quitar_subrayado"%>
+                  <% end %>
+                  </td>
+                  <td class="col"><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } ,class:"quitar_subrayado"%></td>
+                </tr>
+              </div>
+          <% end %>
+        </table>
+      </tbody>
+  </table>
+</div>
+
+<br>

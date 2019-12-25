@@ -1,0 +1,57 @@
+
+<%
+noRegistrado = false
+
+if User.exists?(comment.user.id)
+  userName = User.find(comment.user.id).name
+else
+  userName = comment.user.id.to_s
+  noRegistrado = true
+end
+
+
+iniciales = userName.strip.split /\s+/
+
+avatarName = 'X'
+
+if iniciales.length == 1 && !noRegistrado
+  ini1 = iniciales[0]
+  avatarName = ini1[0,1].upcase
+end
+if iniciales.length > 1  && !noRegistrado
+  ini1 = iniciales[0]
+  ini2 = iniciales[1]
+  avatarName = ini1[0,1].upcase + ini2[0,1].upcase
+end
+
+backColours = ['Gold', 'Limegreen', 'LightBlue', 'Bisque', 'Pink', 'Tomato', 'Orangered', 
+'Palegoldenrod', 'Palegreen', 'Mistyrose']
+numIdColor = comment.user.id.to_i % 10
+backColour = backColours[numIdColor]
+
+%>
+
+<div class="comment">
+  <div class="ownerUserComment">
+    <div class="avatar" style="background:<%= backColour %>;"><%= avatarName %></div>
+    <p class="nameComment"><%= comment.user.name %></p>
+  </div>  
+  
+  <div class="commentContent">
+    <p><%= comment.body  %></p>
+    <% if not comment.system %>
+      <% if comment.user == current_user %>
+        <%= link_to 'Edit', edit_issue_comment_path(comment.issue_id, comment.id, comment.body) %> 
+        <span class='punto'>·</span>
+        <%= link_to 'Delete', comment, method: :delete, data: {confirm: 'Are you sure?' } %>
+        <span class='punto'>·</span>
+        <%= time_ago_in_words(comment.created_at) + ' ago'%>
+        <br><br>
+      <%end%>
+    <% else %>
+      <span class='punto'>·</span>
+      <%= time_ago_in_words(comment.created_at) + ' ago'%>
+      <br><br>
+    <% end %>
+  </div>
+</div>

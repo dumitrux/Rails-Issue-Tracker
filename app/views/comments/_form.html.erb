@@ -1,0 +1,13 @@
+<%= form_with(model: comment, local: true) do |form| %>
+  
+  <%= form.label :body %>
+  <div class="field ">
+    <%= form.text_area :body, class:"min_size" %>
+  </div>
+
+  <div class="actions left">
+    <%=  form.submit class:"btn btn-primary separator" %>
+    <%= link_to 'Cancel', @comment.issue, class:"cancel"%>
+  </div>
+  
+<% end %>

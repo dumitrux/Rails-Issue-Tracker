@@ -1,0 +1,128 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Issues', issues_path ,class:"btn btn-default separacion-issues" %>
+
+<div class="title-container separacion-title">
+  <h1 class="separacion-title"><%= @issue.title %></h1>
+</div>
+
+
+ <div>
+   
+   
+  <div class="panel-body izquierda-body">
+    <p>
+      <%= @issue.user_id %>
+      created an issue <%= @issue.created_at %>
+      <div><%= @issue.description %></div>
+    </p>
+    
+   
+  <div>
+    <% 
+    i = 0
+    (0...@issue.attachments.count).each do |attach| %>
+      <div>
+        <%= link_to raw("<img src='https://image.flaticon.com/icons/png/512/252/252006.png', width='100'>"), 
+        @issue.attachments[attach], 
+        download: '', 
+        class: "no_link" %>
+        <p> <%=  @issue.attachments[attach].filename %> </p>
+      </div>
+      
+    <%
+    i = i + 1
+    end 
+    %>
+    
+    <%= 
+    if i > 0
+      # Al ir al controller e intentar encontrar el elemento segun el id da error
+      link_to raw("Remove attachments <img src='http://icons.iconarchive.com/icons/danieledesantis/playstation-flat/256/playstation-cross-black-and-white-icon.png', width='20'>"),
+        delete_attachment_url(@issue.id),
+        method: :put,
+        data: { confirm: 'Are you sure you want to delete this attachment?' },
+        multipart: true
+    end
+    %>
+  
+  <hr class="linia_gruesa ">
+
+  <h3 class="comments_title">Comments (<%= @issue.comments.count %>)</h3>
+  <div id="comments">
+    <%= render :partial => @issue.comments %>
+  </div>
+  <div class="submit-bottom">
+    
+        <%= simple_form_for [@issue, Comment.new] do |f| %>
+        <div class="field campo-comment"">
+          <%= f.text_area :body, class: "form-control" %>
+        </div>
+        <br>
+        <div class: "add-coment-submit> <%= f.submit "Add Comment", class: "btn btn-primary add-coment-submit" %> </div>
+      <% end %>
+  </div>
+  </div>
+  
+</div>
+
+<div class="form-group derecha_botones derecha-body">
+    <div class="col-sm-11 col-sm-offset-1 espacio derecha_create derecha-todo">
+      <%= link_to 'Create Issue', new_issue_path ,class:"btn btn-default" %>
+    </div>
+    
+    <div class="col-sm-11 col-sm-offset-1 editIssuesWork derecha-todo">
+      <div class="dropdownbloque">
+        <button class="btn btn-default dropdown-toggle"  type="button" data-toggle="dropdown" >Workflow</button>
+          <div class="dropdown-content">
+            <% Issue.status.each do |status| %>
+                <% if status != @issue.status %>
+                
+                <div><a<%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status), method: :put)) %></div></a>
+                <% end %>
+            <% end %>
+          </div>
+      </div>
+      <%= link_to 'Edit', edit_issue_path(@issue), class:"btn btn-default" %>
+    </div>
+    
+    <div class="panel panel-default info">
+      <p>
+        <strong >Assignee</strong>
+        <%= @issue.assignee %>
+      </p>
+    
+      
+      <p>
+        <strong>Type</strong>
+        <%= link_to @issue.issueType, issues_url(typeOptions: @issue.issueType),class:"quitar_subrayado" %>
+      </p>
+      <p>
+        <strong>Priority</strong>
+        <%= link_to @issue.priority, issues_url(priorityOptions: @issue.priority),class:"quitar_subrayado" %>
+      </p>
+      <p>
+        <strong>Status</strong>
+        <%= link_to @issue.status, issues_url(statusOptions: @issue.status) ,class:"quitar_subrayado"%>
+      </p>
+    
+      <p>
+      <strong>Votes</strong>
+        <%= @issue.num_votes %>
+        <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
+          <%= link_to "Vote this issue", vote_url(id: @issue.id), method: :post , class:"quitar_subrayado"%>
+        <% else %>
+          <%= link_to "Unvote this issue", vote_url(id: @issue.id), method: :post , class:"quitar_subrayado"%>
+        <% end %>
+      </p>
+    
+    <p>
+      <strong>Watchers</strong>
+        <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
+          <%= link_to "Watch this issue", watch_url(id: @issue.id, currentView: "iss"), method: :post , class:"quitar_subrayado"%>
+        <% else %>
+          <%= link_to "Unwatch this issue", watch_url(id: @issue.id, currentView: "iss"), method: :post, class:"quitar_subrayado" %>
+        <% end %>
+    </p>
+  
+</div>

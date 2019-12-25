@@ -1,0 +1,238 @@
+// Place all the styles related to the Issues controller here.
+// They will automatically be included in application.css.
+// You  can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.tileVariables{
+  color: rgb(94, 108, 132);
+}
+
+.titleVariables:hover{
+    background-color: #F4F5F7;
+    color: #172B4D;
+    cursor: pointer;
+}
+
+.dreta{
+  float: right;
+  .separator{
+    margin-right:5px;
+  }
+}
+
+.cancel{
+  &:hover {
+      background-color:white;
+  }
+}
+
+
+.no_link {
+  text-decoration: none;
+}
+
+.icon-cross {
+  width: 20px;
+}
+
+#indexAssigne {
+    display: flex;
+}
+
+td {
+  vertical-align: middle !important;
+}
+
+.assigneLink {
+  padding-top: 5px;
+}
+
+.punto {
+  font-weight: 900;
+}
+.quitar_subrayado{
+  &:hover {
+      background-color:none;
+      underline:none;
+      
+  }
+  color:#666;
+}
+
+.nonegrita{
+  font-weight:normal;
+  color:#707070;
+}
+
+.lado{
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown:hover {
+  display: block;
+}
+
+.dropdown:active {
+  :hover{
+    background-color: red;
+    text-decoration: none;
+  }
+  background-color: yellow;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.derecha_botones{
+  float:right;
+  position:relative;
+}
+
+.editIssuesWork{
+  float:left;
+  position:relative;
+  text-align:right;
+  width:100%;
+}
+.derecha_create{
+  float:right;
+  text-align:right;
+  margin-bottom:20px;
+  background-color:F4F5F7;
+  width:100%;
+}
+
+.info{
+  margin-top:10px;
+  float:right;
+  text-align:center;
+  border-color: gray;
+  border-width: 1px;
+  border-style: dotted;
+  padding: 10px;
+}
+
+.otrainfo{
+  width:'100%';
+}
+
+.line{
+  border:2px;
+  color:black;
+  background-color:red;
+}
+
+.cincuenta{
+  width:'50%';
+  .derecha{
+    float:right;
+  }
+  .izquierda{
+    float:left;
+  }
+}
+
+.filter_derecha{
+  float:left;
+  margin-right:20px;
+}
+
+.filter_title{
+  width:5%;
+  float:left;
+}
+
+.meitat_filtres{
+  width:90%;
+  float:left;
+  margin-left:15px;
+}
+
+.linia_completa{
+  width:100%;
+  float:right;
+}
+
+.linia_completa_issues{
+  width:100%;
+  margin-top:100px;
+}
+
+.textSize{
+  font-size:15px;
+  font-weight:bold;
+}
+
+.dropdownbloque{
+  position:relative;
+  display:inline-block;
+}
+
+.dropdown-content{
+  display:none;
+  position:absolute;
+  background-color:#f9f9f9;
+  text-align:left;
+  box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding:12px 16px;
+  z-index:1;
+}
+
+.dropdownbloque:hover .dropdown-content{
+  display:block;
+}
+
+.comments_title{
+  margin-left:0px;
+}
+
+.campo-comment{
+  margin-left:0px;
+  width:70%;
+}
+
+.add-coment-submit{
+  margin-left:0px;
+}
+
+.submit-bottom{
+  margin-bottom:20px;
+}
+
+.izquierda-body{
+  width:70%;
+  float:left;
+}
+
+.derecha-body{
+  width:30%;
+  float:left;
+}
+
+.separacion-issues{
+  margin-left:11px;
+  margin-top:9px;
+}
+
+.separacion-title{
+  margin-left:5px;
+}
+
+.linia_gruesa{
+  border: solid #ddd; 
+  border-width: 3px 0 0; 
+  clear: both; 
+  width:100%;
+  margin: 22px 0 21px; 
+  height: 0;
+}

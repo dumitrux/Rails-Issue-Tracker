@@ -1,0 +1,54 @@
+<%= form_with(model: issue, local: true) do |form| %>
+  <% if issue.errors.any? %>
+    <div class="alert alert-danger errors">
+      <ul>
+        <% issue.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title , class:"nonegrita lado"%>
+    <%= form.text_field :title, class:"form-control titleHover" %>
+  </div>
+  
+  <div class="form-group">
+    <%= form.label :description, class:"nonegrita" %>
+    <%= form.text_area(:description, size: '50x10', class:"form-control") %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :assignee , class:"nonegrita"%>
+   
+    <%= form.text_field :assignee, class:"form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= form.label "Kind", class: 'control-label' , class:"nonegrita"%>
+    <div class="controls">
+      <%= form.select(:issueType, options_for_select([['bug','bug'],['enhancement','enhancement'],['proposal','proposal'],['task','task']]))%>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= form.label "Priority", class: 'control-label', class:"nonegrita lado" %>
+    <div class="controls">
+      <%= form.select(:priority, options_for_select([['trivial','trivial'],['minor','minor'],['major','major'],['critical','critical'],['blocker','blocker']]))%>
+    </div>
+  </div>
+  
+
+  <div class="form-group">
+     <div class="field">
+      <%= form.label :attachments, class:"nonegrita " %>
+      <%= form.file_field :attachments, multiple: true %>
+    </div>
+  </div>
+  
+  <div class="actions dreta">
+    <%=  form.submit class:"btn btn-primary separator" %>
+    <%= link_to 'Cancel', issues_path, class:"cancel"%>
+  </div>
+<% end %>

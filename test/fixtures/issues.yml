@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  assignee: MyString
+  issueType: MyString
+  priority: MyString
+  user_id: 1
+  description: MyString
+
+two:
+  title: MyString
+  assignee: MyString
+  issueType: MyString
+  priority: MyString
+  user_id: 1
+  description: MyString

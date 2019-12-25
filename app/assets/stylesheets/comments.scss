@@ -1,0 +1,29 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.ownerUserComment {
+  display: flex;
+  margin: 0px 0px 0px 0px;
+  margin-left:0px;
+  padding-bottom:3px;
+  margin-top:30px;
+}
+
+.nameComment {
+  padding-top: 5px;
+}
+
+.commentContent {
+  margin: 0px 0px 4px 0px;
+}
+
+.espacio-edit-delete{
+  margin-right:3px;
+}
+
+.min_size{
+  min-height:300px;
+  min-width:300px;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>IssueTracker</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <body class="container">
+    <div id="outPagLogin">
+      <div id="pagLogin">
+        <h1>Issue Tracker</h1>
+        <br>
+        <div id="divLogin">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
