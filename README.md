@@ -1,8 +1,7 @@
-# IssueTracker G13D 
+# IssueTracker
 
 A web app made it with Ruby on Rails, based on the issue tracker of Bitbucket.
 
----
 
 ## Screenshots
 
@@ -24,13 +23,13 @@ A web app made it with Ruby on Rails, based on the issue tracker of Bitbucket.
 #### Edit issue
 ![Edit issue](images/6.PNG)
 
----
 
 ## Authors
 - Danci, Marian Dumitru
 - Ait Fonollà, Adem
 - Segura Sánchez, Enric
 - Conesa Gago, Agustí
+
 
 Link heroku:
 https://blooming-bayou-14556.herokuapp.com
