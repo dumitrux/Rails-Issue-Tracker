@@ -1,6 +1,6 @@
 # IssueTracker
 
-A web app made it with Ruby on Rails, based on the issue tracker of Bitbucket.
+A web app made with Ruby on Rails, based on the issue tracker of Bitbucket.
 
 
 ## Screenshots
